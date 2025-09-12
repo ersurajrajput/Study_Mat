@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:padding="20dp">
+
+  <EditText
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/et_UserName"
+      android:layout_marginBottom="10dp"
+      android:hint="User Name"/>
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_UserAge"
+        android:layout_below="@+id/et_UserName"
+        android:hint="User Age"/>
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sw_activeUser"
+        android:layout_below="@+id/et_UserAge"
+        android:text="Active User "/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_viewAll"
+        android:layout_below="@id/sw_activeUser"
+        android:text="View All"/>
+
+  <Button
+      android:id="@+id/btn_addNewUser"
+      android:layout_width="86dp"
+      android:layout_height="47dp"
+      android:layout_below="@id/sw_activeUser"
+      android:layout_marginLeft="150dp"
+      android:layout_toEndOf="@+id/btn_viewAll"
+      android:text="Add" />
+
+  <ListView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:id="@+id/lv_userList"
+      android:layout_below="@+id/btn_viewAll"
+      android:layout_alignParentStart="true"
+      android:layout_alignParentEnd="true"
+      android:layout_marginStart="20dp"
+      android:layout_marginTop="91dp"
+      android:layout_marginEnd="20dp" />
+
+
+</RelativeLayout>
