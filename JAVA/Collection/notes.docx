@@ -1,0 +1,39 @@
+🔑 Java Collection Types:
+Collection:
+The root interface for all other collection types (except Map).
+
+List:
+An ordered collection that can contain duplicate elements.
+🔸 Examples: ArrayList, LinkedList
+
+Set:
+A collection that cannot contain duplicate elements.
+🔸 Examples: HashSet, TreeSet
+
+Queue:
+A collection designed for holding elements prior to processing.
+🔸 Examples: PriorityQueue, LinkedList (when used as a queue)
+
+Deque (Double-Ended Queue):
+Allows insertion/removal from both ends.
+🔸 Example: ArrayDeque
+
+Map:
+Stores key-value pairs, and is not a subtype of Collection.
+🔸 Examples: HashMap, TreeMap
+
+🔸 🔸 🔸 🔸 🔸 🔸 🔸 🔸 🔸 🔸 🔸 List:🔸 🔸 🔸 🔸 🔸 🔸 🔸 
+🔸 🔸 🔸 ArrayList:-
+        internal working same as array.
+        when array is full new array is created (big size) and the elements of old array is copied in new array
+        default size of initial array is 10.
+        internal working same as array.
+        growth factor is 1.5 (so if old array is 10. then new array will be 15)
+        List<Integer> l = new ArrayList<>( 100 ); // for making initial capacity 100 insted of 10
+    🔸 🔸Adding:-
+            checks if has enough space or not. if not then create new array
+            Time complexity O(n)
+     🔸 🔸Removing:-   
+            checks boud ,  removes element and then shifts other elements
+            dose not reduce its capacity even if we deleted all elements
+            need to use trimToSize() for reducing size

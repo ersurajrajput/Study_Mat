@@ -1,0 +1,27 @@
+{
+  "name": "study_material",
+  "version": "1.0.0",
+  "description": "Welcome to my Personal Code Repository! 🚀",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ersurajrajput/Study_Material.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ersurajrajput/Study_Material/issues"
+  },
+  "homepage": "https://github.com/ersurajrajput/Study_Material#readme",
+  "dependencies": {
+    "git": "^0.1.5",
+    "jsonfile": "^6.1.0",
+    "moment": "^2.30.1",
+    "simple": "^0.2.0"
+  }
+}
