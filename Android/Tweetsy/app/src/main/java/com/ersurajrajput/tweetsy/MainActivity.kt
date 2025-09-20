@@ -1,5 +1,6 @@
 package com.ersurajrajput.tweetsy
 
+import CategoriesScreen
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -29,65 +30,17 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @Inject
-    lateinit var tweetsyAPI: TweetsyAPI
-    @Inject
-    lateinit var repository: TweetRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        GlobalScope.launch {
-            repository.getAllTweetsByCategories("aiml")
-            var data = repository.tweetListByCat
-            Log.d("myTag",data.value.toString())
-        }
+
         setContent {
             TweetsyTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                CategoriesScreen()
             }
         }
 
     }
 
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    var buttonText by remember { mutableStateOf("Click Me") }
-
-    Column(modifier = modifier) {
-        Text(
-            text = "Hello $name!",
-
-        )
-        Text(
-            text = "hello suraaj",
-         )
-       Button(onClick = {
-
-               buttonText = "clicked"
-
-       }) {
-           Text(
-               text = buttonText
-           )
-       }
-    }
-}
-@Preview(showBackground = true, widthDp = 360, heightDp = 640)
-@Composable
-fun FullScreenPreview() {
-    TweetsyTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            Greeting(
-                name = "Android",
-                modifier = Modifier.padding(innerPadding)
-            )
-        }
-    }
 }
