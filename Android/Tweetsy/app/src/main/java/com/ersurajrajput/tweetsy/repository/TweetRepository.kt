@@ -7,54 +7,71 @@ import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 class TweetRepository @Inject constructor(private val tweetsyAPI: TweetsyAPI){
-    private val _tweetList = MutableStateFlow<List<TweetModel>>(emptyList())
+    private val _allTweetList = MutableStateFlow<List<TweetModel>>(emptyList())
     public val tweetList:StateFlow<List<TweetModel>>
-        get() = _tweetList
+        get() = _allTweetList
 
-    private val _tweetCategories = MutableStateFlow<List<String>>(emptyList())
+    private val _allTweetCategories = MutableStateFlow<List<String>>(emptyList())
     public val tweetCategories:StateFlow<List<String>>
-        get() = _tweetCategories
+        get() = _allTweetCategories
+
+    private val _allTweetByCategories = MutableStateFlow<List<TweetModel>>(emptyList())
+    public val allTweetByCategories:StateFlow<List<TweetModel>>
+        get() = _allTweetByCategories
 
 
-    private val _tweetListByCat = MutableStateFlow<List<TweetModel>>(emptyList())
-    public val tweetListByCat:StateFlow<List<TweetModel>>
-        get() =_tweetListByCat
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
 
 
 
-    suspend fun getTweet(){
+
+
+
+    suspend fun getAllTweet(){
+        _isLoading.value = true
         val response = tweetsyAPI.getTweets()
         if (response.isSuccessful && response.body()!=null){
             response.body()?.let {
-            _tweetList.value =  response.body()!!
+                _isLoading.value = false
+                _allTweetList.value =  response.body()!!
             }
         }
     }
-    suspend fun getAllCategories(){
-        val response = tweetsyAPI.getTweets()
-        if (response.isSuccessful && response.body()!=null){
-            response.body()?.let {
-                val myList: MutableList<String> = mutableListOf()
-                val responseBody = response.body() ?: emptyList()
-                for (res in responseBody){
-                    if (!myList.contains(res.category)){
-                        myList.add(res.category.toString())
-                    }
+    suspend fun getAllCategories() {
+        _isLoading.value = true
+        try {
+            val response = tweetsyAPI.getAllCategories()
+            if (response.isSuccessful) {
+                val categories = response.body() ?: emptyList()
+                _allTweetCategories.value = categories.distinct()
+            }
+        } catch (e: Exception) {
+            // Optionally handle error (log it, show message, etc.)
+            e.printStackTrace()
+        } finally {
+            _isLoading.value = false // Always reset loading state
+        }
+    }
+
+    suspend fun getAllTweetsByCategories(  cat: String){
+
+        _isLoading.value = true
+        try {
+            val response = tweetsyAPI.getAllTweetsByCategories("tweets[?(@.category==\"$cat\")]")
+            if (response.isSuccessful) {
+                response.body()?.let {
+
+                    _allTweetByCategories.value =  response.body()!!
                 }
-                _tweetCategories.value = myList
             }
+        } catch (e: Exception) {
+            // Optionally handle error (log it, show message, etc.)
+            e.printStackTrace()
+        } finally {
+            _isLoading.value = false // Always reset loading state
         }
-
     }
 
 
-    suspend fun getAllTweetsByCategories(cat: String){
-        val response = tweetsyAPI.getTweets()
-        if (response.isSuccessful && response.body()!=null){
-            response.body()?.let {
-                response.body()?.let { it1 -> _tweetListByCat.value =  it1.filter { it.category == cat } }
-            }
-        }
-
     }
-}

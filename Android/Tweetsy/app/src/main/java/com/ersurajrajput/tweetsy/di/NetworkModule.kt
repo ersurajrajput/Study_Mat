@@ -13,7 +13,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
-    val BASE_URL = "https://raw.githubusercontent.com/ersurajrajput/Study_Mat/refs/heads/main/Android/Tweetsy/app/src/main/res/raw/"
+    val BASE_URL = "https://api.jsonbin.io/v3/b/"
 
     @Singleton
     @Provides
