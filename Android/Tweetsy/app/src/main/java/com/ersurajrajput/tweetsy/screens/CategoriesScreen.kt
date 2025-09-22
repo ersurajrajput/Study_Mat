@@ -1,4 +1,6 @@
 import android.widget.Toast
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -23,23 +25,29 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.paint
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.painterResource
 
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ersurajrajput.tweetsy.R
 
 import com.ersurajrajput.tweetsy.viewModel.CategoryViewModel
 
 
 @Composable
 @Preview(showBackground = true, widthDp = 360, heightDp = 640)
-fun CategoriesScreen() {
-    val categoryViewModel: CategoryViewModel = viewModel()
+fun CategoriesScreen(onclick:(cat:String)->Unit={}) {
+    val categoryViewModel: CategoryViewModel = hiltViewModel()
     val category: State<List<String>> = categoryViewModel.category.collectAsState()
     val isLoading: Boolean by categoryViewModel.isLoading.collectAsState(initial = false)
 
@@ -50,7 +58,6 @@ fun CategoriesScreen() {
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator()
-
         }
     } else {
         LazyVerticalGrid(
@@ -61,28 +68,30 @@ fun CategoriesScreen() {
 
         ) {
             items(category.value) {
-                CategoriesItems(category = it)
+                CategoriesItems(category = it,onclick)
             }
         }
-
     }
-
-
 }
 
 @Composable
 @Preview
-fun CategoriesItems(category: String = "sample") {
+fun CategoriesItems(category: String = "all",onclick:(cat:String)->Unit={}) {
     val context = LocalContext.current
     Box(
         modifier = Modifier
             .padding(4.dp)
             .size(160.dp)
+
             .clickable {
-                Toast.makeText(context, category, Toast.LENGTH_SHORT).show()
+                onclick(category)
             }
             .clip(RoundedCornerShape(8.dp))
-            .border(2.dp, Color.LightGray),
+            .border(2.dp, Color.LightGray)
+            .paint(
+                painterResource(id = R.drawable.bg),
+                contentScale = androidx.compose.ui.layout.ContentScale.Crop
+            ),
         contentAlignment = Alignment.BottomCenter
     ) {
 

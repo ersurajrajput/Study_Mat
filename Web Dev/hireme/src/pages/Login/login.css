@@ -1,0 +1,215 @@
+/* Login Page CSS */
+
+/* Hide browser scrollbars for Login page */
+html, body {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Login page specific styles */
+.login-container {
+  margin-top: 32px;
+  margin-bottom: 16px;
+}
+
+.login-paper {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 18px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.login-icon {
+  margin-bottom: 16px;
+}
+
+.login-icon svg {
+  font-size: 48px;
+  color: var(--mui-palette-primary-main, #1976d2);
+}
+
+.login-mode-toggle {
+  display: flex;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.login-mode-button {
+  flex: 1;
+  margin-right: 8px;
+}
+
+.login-mode-button:last-child {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+.login-title {
+  margin-bottom: 24px;
+  font-weight: 700;
+}
+
+.login-form {
+  width: 100%;
+}
+
+.login-textfield {
+  margin: 8px 0;
+  margin-bottom: 16px;
+}
+
+.login-textfield:last-of-type {
+  margin-bottom: 24px;
+}
+
+.login-submit-button {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  padding: 12px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.login-links {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.login-links button {
+  text-transform: none;
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 8px;
+}
+
+.login-footer button {
+  text-transform: none;
+  padding: 0;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .login-paper {
+    padding: 24px 16px;
+    margin: 16px;
+  }
+  
+  .login-container {
+    margin-top: 16px;
+  }
+  
+  .login-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .login-mode-toggle {
+    flex-direction: column;
+  }
+  
+  .login-mode-button {
+    margin: 4px 0;
+  }
+  
+  .login-mode-button:last-child {
+    margin-left: 0;
+  }
+}
+
+/* Dark mode specific styles */
+[data-mui-color-scheme="dark"] .login-paper {
+  background-color: var(--mui-palette-background-paper);
+  border: 1px solid var(--mui-palette-divider);
+}
+
+/* Animation for mode switching */
+.login-mode-button {
+  transition: all 0.3s ease;
+}
+
+.login-textfield {
+  transition: all 0.3s ease;
+}
+
+/* Focus states */
+.login-textfield input:focus {
+  outline: none;
+}
+
+.login-submit-button:focus {
+  outline: 2px solid var(--mui-palette-primary-main);
+  outline-offset: 2px;
+}
+
+/* Loading state */
+.login-submit-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Loading spinner animation */
+.login-submit-button .MuiCircularProgress-root {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Loading button specific styles */
+.login-submit-button:disabled {
+  position: relative;
+  overflow: hidden;
+}
+
+.login-submit-button:disabled::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Error states */
+.login-textfield .Mui-error {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Success states */
+.login-textfield .Mui-focused {
+  transform: scale(1.02);
+}
+
+/* Accessibility */
+.login-submit-button:focus-visible {
+  outline: 2px solid var(--mui-palette-primary-main);
+  outline-offset: 2px;
+}
+
+.login-mode-button:focus-visible {
+  outline: 2px solid var(--mui-palette-primary-main);
+  outline-offset: 2px;
+}

@@ -20,8 +20,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.ersurajrajput.tweetsy.api.TweetsyAPI
 import com.ersurajrajput.tweetsy.repository.TweetRepository
+import com.ersurajrajput.tweetsy.screens.TweetScreen
 import com.ersurajrajput.tweetsy.ui.theme.TweetsyTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
@@ -37,10 +43,33 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             TweetsyTheme {
-                CategoriesScreen()
+               App()
             }
         }
 
     }
 
+}
+
+
+@Composable
+fun App(){
+    val navController = rememberNavController()
+     NavHost(navController = navController, startDestination = "categoriesScreen"){
+            composable("categoriesScreen"){
+                CategoriesScreen(){cat ->
+                    navController.navigate("tweetScreen/$cat")
+                    Log.d("myTag","Clicked on $cat")
+                }
+            }
+            composable(route = "tweetScreen/{cat}",
+                arguments = listOf(
+                    navArgument("cat"){
+                        type = NavType.StringType
+                    }
+                )){
+                TweetScreen()
+            }
+
+     }
 }

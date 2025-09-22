@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class TweetRepository @Inject constructor(private val tweetsyAPI: TweetsyAPI){
     private val _allTweetList = MutableStateFlow<List<TweetModel>>(emptyList())
-    public val tweetList:StateFlow<List<TweetModel>>
+    public val allTweetList:StateFlow<List<TweetModel>>
         get() = _allTweetList
 
     private val _allTweetCategories = MutableStateFlow<List<String>>(emptyList())
@@ -54,15 +54,18 @@ class TweetRepository @Inject constructor(private val tweetsyAPI: TweetsyAPI){
         }
     }
 
-    suspend fun getAllTweetsByCategories(  cat: String){
+    suspend fun getAllTweetsByCategories(cat: String){
 
         _isLoading.value = true
         try {
-            val response = tweetsyAPI.getAllTweetsByCategories("tweets[?(@.category==\"$cat\")]")
+            val response = tweetsyAPI.getTweets()
             if (response.isSuccessful) {
                 response.body()?.let {
 
-                    _allTweetByCategories.value =  response.body()!!
+                        _allTweetByCategories.value =  response.body()!!.filter { tweet ->
+                            tweet.category.equals(cat, ignoreCase = true)
+                        }
+
                 }
             }
         } catch (e: Exception) {
